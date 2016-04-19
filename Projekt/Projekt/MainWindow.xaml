@@ -20,17 +20,17 @@
                     <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Margin="47,101,0,0" VerticalAlignment="Top" Width="194"/>
                     <Label x:Name="label3" Content="Streamuj wybrane okno" HorizontalAlignment="Left" Margin="10,127,0,0" VerticalAlignment="Top"/>
                     <ComboBox x:Name="comboBox2" HorizontalAlignment="Left" Margin="150,131,0,0" VerticalAlignment="Top" Width="91"/>
-                    <Button x:Name="button" Content="Start" HorizontalAlignment="Left" Margin="10,217,0,0" VerticalAlignment="Top" Width="231" Height="44"/>
+                    <Button x:Name="button" Content="Start" HorizontalAlignment="Left" Margin="10,217,0,0" VerticalAlignment="Top" Width="231" Height="44" Click="button_Click_1"/>
                     <Label x:Name="label5" Content="Adres IP: XXX.XXX.XXX.XXX" HorizontalAlignment="Left" Margin="10,186,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Odbieraj">
                 <Grid Background="#FFE5E5E5">
                     <Label x:Name="label4" Content="Adres IP" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="69,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178"/>
-                    <Button x:Name="button1" Content="Rozpocznij" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="75"/>
-                    <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="180" Margin="10,81,0,0" Stroke="Black" VerticalAlignment="Top" Width="237"/>
-                    <Button x:Name="button2" Content="Pełny Ekran" HorizontalAlignment="Left" Margin="172,241,0,0" VerticalAlignment="Top" Width="75"/>
+                    <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="69,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178" TextChanged="textBox_TextChanged"/>
+                    <Button x:Name="button1" Content="Rozpocznij" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="75" Click="button1_Click"/>
+                    <Button x:Name="button2" Content="Pełny Ekran" HorizontalAlignment="Left" Margin="172,241,0,0" VerticalAlignment="Top" Width="75" Click="button2_Click"/>
+                    <Image x:Name="image" HorizontalAlignment="Left" Height="165" Margin="10,71,0,0" VerticalAlignment="Top" Width="235"/>
                 </Grid>
             </TabItem>
         </TabControl>
