@@ -27,6 +27,9 @@ namespace Projekt
     /// </summary>
     public partial class MainWindow : Window
     {
+        Socket server = new Socket(AddressFamily.InterNetwork,
+                            SocketType.Stream, ProtocolType.Tcp);
+
         string ip_nadawcy;
         public static string data = null;
 
@@ -106,23 +109,11 @@ namespace Projekt
         {
             InitializeComponent();
             label5.Content = "ADRES IP: " + GetLocalIPAddress();
+
             
-        }
-
-
-
-        private void button_Click_1(object sender, RoutedEventArgs e)
-        {
-            przesyl();
-
-
-            //////////////
-            byte[] data = new byte[1024];
-            int sent;
             IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(ip_odbiorcy), 9050);
 
-            Socket server = new Socket(AddressFamily.InterNetwork,
-                            SocketType.Stream, ProtocolType.Tcp);
+            
 
             try
             {
@@ -134,6 +125,19 @@ namespace Projekt
                 MessageBox.Show(se.ToString());
                 //Console.ReadLine();
             }
+
+        }
+
+        
+
+        private void button_Click_1(object sender, RoutedEventArgs e)
+        {
+            przesyl();
+
+
+            //////////////
+            byte[] data = new byte[10000];
+            int sent;
 
 
             Bitmap bmp = new Bitmap("C:\\Users\\Paweu\\Desktop\\1.jpg");
@@ -150,8 +154,8 @@ namespace Projekt
             sent = SendVarData(server, bmpBytes);
 
            // Console.WriteLine("Disconnecting from server...");
-            server.Shutdown(SocketShutdown.Both);
-            server.Close();
+           // server.Shutdown(SocketShutdown.Both);
+           // server.Close();
 
         }
     
