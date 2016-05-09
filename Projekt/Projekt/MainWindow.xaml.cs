@@ -19,6 +19,7 @@ using System.IO;
 using System.Threading;
 using System.Net;
 using System.Net.Sockets;
+using System.Windows.Threading;
 
 namespace Projekt
 {
@@ -27,13 +28,7 @@ namespace Projekt
     /// </summary>
     public partial class MainWindow : Window
     {
-        Socket server = new Socket(AddressFamily.InterNetwork,
-                            SocketType.Stream, ProtocolType.Tcp);
-
-        string ip_nadawcy;
-        public static string data = null;
-
-
+        Socket client;
         private BitmapSource CopyScreen()
         {
             using (var screenBmp = new Bitmap(
@@ -65,9 +60,30 @@ namespace Projekt
         }
         public void przesyl()
         {
-            BitmapSource bmp = CopyScreen();
-            image.Source = bmp;
-            SaveClipboardImageToFile("C:\\Users\\Paweu\\Desktop\\1.jpg",bmp);
+          //  while (true)
+         //   {
+                BitmapSource bmp = CopyScreen();
+                bmp.Freeze();
+                Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new ThreadStart(delegate
+                {
+                    this.image.Source = bmp;
+                }));
+
+                SaveClipboardImageToFile("C:\\Users\\Paweu\\Desktop\\1.jpg", bmp);
+                int sent;
+                Bitmap bmp1 = new Bitmap("C:\\Users\\Paweu\\Desktop\\1.jpg");
+
+                MemoryStream ms = new MemoryStream();
+                // Save to memory using the Jpeg format
+                bmp1.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                // read to end
+                byte[] bmpBytes = ms.ToArray();
+                bmp1.Dispose();
+                ms.Close();
+
+                sent = SendVarData(client, bmpBytes);
+         //   }
         }
 
         public static string GetLocalIPAddress()
@@ -104,61 +120,47 @@ namespace Projekt
         }
 
         string ip_odbiorcy = GetLocalIPAddress();
+        string ip_nadawcy = GetLocalIPAddress();
         //Thread t;
         public MainWindow()
         {
             InitializeComponent();
             label5.Content = "ADRES IP: " + GetLocalIPAddress();
 
-            
-            IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(ip_odbiorcy), 9050);
-
-            
-
-            try
-            {
-                server.Connect(ipep);
-            }
-            catch (SocketException se)
-            {
-                MessageBox.Show("Unable to connect to server.");
-                MessageBox.Show(se.ToString());
-                //Console.ReadLine();
-            }
-
         }
 
+        byte[] data = new byte[10000];
+        IPEndPoint ipep = new IPEndPoint(IPAddress.Any, 9050);
+
+        Socket newsock = new Socket(AddressFamily.InterNetwork,
+                        SocketType.Stream, ProtocolType.Tcp);
+
         
+        bool dupy = false;
 
         private void button_Click_1(object sender, RoutedEventArgs e)
         {
-            przesyl();
 
+            if (dupy == false)
+            { 
+                newsock.Bind(ipep);
+                dupy = true;
+            }
+            newsock.Listen(60);
+            Console.WriteLine("Waiting for a client...");
 
-            //////////////
-            byte[] data = new byte[10000];
-            int sent;
-
-
-            Bitmap bmp = new Bitmap("C:\\Users\\Paweu\\Desktop\\1.jpg");
-
-            MemoryStream ms = new MemoryStream();
-            // Save to memory using the Jpeg format
-            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-
-            // read to end
-            byte[] bmpBytes = ms.ToArray();
-            bmp.Dispose();
-            ms.Close();
-
-            sent = SendVarData(server, bmpBytes);
-
-           // Console.WriteLine("Disconnecting from server...");
-           // server.Shutdown(SocketShutdown.Both);
-           // server.Close();
+            client = newsock.Accept();
+            IPEndPoint newclient = (IPEndPoint)client.RemoteEndPoint;
+            Console.WriteLine("Connected with {0} at port {1}",
+                            newclient.Address, newclient.Port);
+            Thread thread = new Thread(new ThreadStart(przesyl));
+            thread.Start();
+            
+            
 
         }
-    
+
+
 
         private void button2_Click(object sender, RoutedEventArgs e)
         {
