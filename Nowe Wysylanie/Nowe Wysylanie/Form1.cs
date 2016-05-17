@@ -19,7 +19,14 @@ namespace Nowe_Wysylanie
             Bitmap obraz = new Bitmap(rect.Width, rect.Height, PixelFormat.Format24bppRgb); //24 bity na pixel * wysokosc * szerokosc
             Graphics g = Graphics.FromImage(obraz);
             g.CopyFromScreen(rect.X, rect.Y, 0, 0, rect.Size, CopyPixelOperation.SourceCopy);//rysowanie
-            return obraz;
+
+            Bitmap output = new Bitmap(683, 384);
+            using (Graphics gs = Graphics.FromImage(output))
+            {
+                gs.DrawImage(obraz, 0, 0, 683, 384);
+            }
+
+            return output;
         }
 
         private void send()

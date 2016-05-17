@@ -62,5 +62,24 @@ namespace Nowe_Odbieranie
             base.OnFormClosing(e);
             stopListening();
         }
+
+        //pelny ekran
+        /*bool fullscreen = false;
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (!fullscreen)
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                this.Bounds = Screen.PrimaryScreen.Bounds;
+                fullscreen = true;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Maximized;
+                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+                fullscreen = false;
+            }
+        }*/
     }
 }
