@@ -20,13 +20,13 @@ namespace Nowe_Wysylanie
             Graphics g = Graphics.FromImage(obraz);
             g.CopyFromScreen(rect.X, rect.Y, 0, 0, rect.Size, CopyPixelOperation.SourceCopy);//rysowanie
 
-            Bitmap output = new Bitmap(683, 384);
+            /*Bitmap output = new Bitmap(683, 384);
             using (Graphics gs = Graphics.FromImage(output))
             {
                 gs.DrawImage(obraz, 0, 0, 683, 384);
             }
-
-            return output;
+            */
+            return obraz;
         }
 
         private void send()

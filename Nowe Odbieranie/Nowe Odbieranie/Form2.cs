@@ -64,8 +64,9 @@ namespace Nowe_Odbieranie
         }
 
         //pelny ekran
-        /*bool fullscreen = false;
-        private void button1_Click(object sender, EventArgs e)
+        bool fullscreen = false;
+
+        private void button1_Click_1(object sender, EventArgs e)
         {
             if (!fullscreen)
             {
@@ -80,6 +81,6 @@ namespace Nowe_Odbieranie
                 this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
                 fullscreen = false;
             }
-        }*/
+        }
     }
 }
