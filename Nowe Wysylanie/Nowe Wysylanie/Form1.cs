@@ -15,10 +15,10 @@ namespace Nowe_Wysylanie
 
         private Image getImage()
         {
-            Rectangle rect = Screen.PrimaryScreen.Bounds; //rozmiar obrazu ekranu
-            Bitmap obraz = new Bitmap(rect.Width, rect.Height, PixelFormat.Format24bppRgb); //24 bity na pixel * wysokosc * szerokosc
-            Graphics g = Graphics.FromImage(obraz);
-            g.CopyFromScreen(rect.X, rect.Y, 0, 0, rect.Size, CopyPixelOperation.SourceCopy);//rysowanie
+            //Rectangle rect = Screen.PrimaryScreen.Bounds; //rozmiar obrazu ekranu
+            //Bitmap obraz = new Bitmap(rect.Width, rect.Height, PixelFormat.Format24bppRgb); //24 bity na pixel * wysokosc * szerokosc
+           // Graphics g = Graphics.FromImage(obraz);
+            //g.CopyFromScreen(rect.X, rect.Y, 0, 0, rect.Size, CopyPixelOperation.SourceCopy);//rysowanie
 
             /*Bitmap output = new Bitmap(683, 384);
             using (Graphics gs = Graphics.FromImage(output))
@@ -26,7 +26,29 @@ namespace Nowe_Wysylanie
                 gs.DrawImage(obraz, 0, 0, 683, 384);
             }
             */
-            return obraz;
+
+            Bitmap screenshot = null;
+
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                screenshot = new Bitmap(screen.Bounds.Width,
+                    screen.Bounds.Height,
+                    System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                // Create a graphics object from the bitmap
+                Graphics gfxScreenshot = Graphics.FromImage(screenshot);
+                // Take the screenshot from the upper left corner to the right bottom corner
+                gfxScreenshot.CopyFromScreen(
+                    screen.Bounds.X,
+                    screen.Bounds.Y,
+                    0,
+                    0,
+                    screen.Bounds.Size,
+                    CopyPixelOperation.SourceCopy);
+                // Save the screenshot
+            }
+
+
+            return screenshot;
         }
 
         private void send()
