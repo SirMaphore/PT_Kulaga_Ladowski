@@ -1,0 +1,12 @@
+c:\users\przemek\documents\visual studio 2015\Projects\Wirtualny Pulpit\Wirtualny Pulpit\bin\Debug\Wirtualny Pulpit.exe.config
+c:\users\przemek\documents\visual studio 2015\Projects\Wirtualny Pulpit\Wirtualny Pulpit\obj\Debug\Wirtualny Pulpit.csprojResolveAssemblyReference.cache
+c:\users\przemek\documents\visual studio 2015\Projects\Wirtualny Pulpit\Wirtualny Pulpit\obj\Debug\Wirtualny_Pulpit.Form1.resources
+c:\users\przemek\documents\visual studio 2015\Projects\Wirtualny Pulpit\Wirtualny Pulpit\obj\Debug\Wirtualny_Pulpit.Properties.Resources.resources
+c:\users\przemek\documents\visual studio 2015\Projects\Wirtualny Pulpit\Wirtualny Pulpit\obj\Debug\Wirtualny Pulpit.csproj.GenerateResource.Cache
+c:\users\przemek\documents\visual studio 2015\Projects\Wirtualny Pulpit\Wirtualny Pulpit\bin\Debug\Wirtualny Pulpit.exe
+c:\users\przemek\documents\visual studio 2015\Projects\Wirtualny Pulpit\Wirtualny Pulpit\bin\Debug\Wirtualny Pulpit.pdb
+c:\users\przemek\documents\visual studio 2015\Projects\Wirtualny Pulpit\Wirtualny Pulpit\obj\Debug\Wirtualny Pulpit.exe
+c:\users\przemek\documents\visual studio 2015\Projects\Wirtualny Pulpit\Wirtualny Pulpit\obj\Debug\Wirtualny Pulpit.pdb
+C:\Users\Paweu\Downloads\Wirtualny-Pulpit\Wirtualny Pulpit\Wirtualny Pulpit\bin\Debug\Wirtualny Pulpit.exe.config
+C:\Users\Paweu\Downloads\Wirtualny-Pulpit\Wirtualny Pulpit\Wirtualny Pulpit\obj\Debug\Wirtualny Pulpit.exe
+C:\Users\Paweu\Downloads\Wirtualny-Pulpit\Wirtualny Pulpit\Wirtualny Pulpit\obj\Debug\Wirtualny Pulpit.pdb
