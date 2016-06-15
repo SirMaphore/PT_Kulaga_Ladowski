@@ -15,17 +15,17 @@ namespace Nowe_Wysylanie
 
         private Image getImage()
         {
-            //Rectangle rect = Screen.PrimaryScreen.Bounds; //rozmiar obrazu ekranu
-            //Bitmap obraz = new Bitmap(rect.Width, rect.Height, PixelFormat.Format24bppRgb); //24 bity na pixel * wysokosc * szerokosc
-           // Graphics g = Graphics.FromImage(obraz);
-            //g.CopyFromScreen(rect.X, rect.Y, 0, 0, rect.Size, CopyPixelOperation.SourceCopy);//rysowanie
+            Rectangle rect = Screen.PrimaryScreen.Bounds; //rozmiar obrazu ekranu
+            Bitmap obraz = new Bitmap(rect.Width, rect.Height, PixelFormat.Format24bppRgb); //24 bity na pixel * wysokosc * szerokosc
+            Graphics g = Graphics.FromImage(obraz);
+            g.CopyFromScreen(rect.X, rect.Y, 0, 0, rect.Size, CopyPixelOperation.SourceCopy);//rysowanie
 
             /*Bitmap output = new Bitmap(683, 384);
             using (Graphics gs = Graphics.FromImage(output))
             {
                 gs.DrawImage(obraz, 0, 0, 683, 384);
             }
-            */
+            
 
             Bitmap screenshot = null;
 
@@ -45,10 +45,10 @@ namespace Nowe_Wysylanie
                     screen.Bounds.Size,
                     CopyPixelOperation.SourceCopy);
                 // Save the screenshot
-            }
+            }*/
 
 
-            return screenshot;
+            return obraz;
         }
 
         private void send()
