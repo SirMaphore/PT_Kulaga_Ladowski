@@ -13,6 +13,9 @@ using System.IO;
 
 namespace Wirtualny_Pulpit
 {
+    ////////////////////////////////
+    ///////////  FORM1  ////////////
+    ////////////////////////////////
     public partial class Form1 : Form
     {
         public Form1()
