@@ -32,75 +32,59 @@ namespace Wirtualny_Pulpit
         [DllImport("user32.dll")]
         private static extern bool GetUserObjectInformation(IntPtr hObj, int nIndex, IntPtr pvInfo, int nLength, ref int lpnLengthNeeded);
 
-        private const long DESKTOP_CREATEWINDOW = 0x0002L;
-        private const long DESKTOP_ENUMERATE = 0x0040L;
-        private const long DESKTOP_WRITEOBJECTS = 0x0080L;
-        private const long DESKTOP_SWITCHDESKTOP = 0x0100L;
-        private const long DESKTOP_CREATEMENU = 0x0004L;
-        private const long DESKTOP_HOOKCONTROL = 0x0008L;
-        private const long DESKTOP_READOBJECTS = 0x0001L;
-        private const long DESKTOP_JOURNALRECORD = 0x0010L;
-        private const long DESKTOP_JOURNALPLAYBACK = 0x0020L;
+        private const long prawa = 0x0002L | 0x0040L | 0x0080L | 0x0100L | 0x0004L | 0x0008L | 0x0001L | 0x0010L | 0x0020;
 
-        private const long rights = DESKTOP_CREATEWINDOW | DESKTOP_ENUMERATE | DESKTOP_WRITEOBJECTS | DESKTOP_SWITCHDESKTOP |
-            DESKTOP_CREATEMENU | DESKTOP_HOOKCONTROL | DESKTOP_READOBJECTS | DESKTOP_JOURNALRECORD | DESKTOP_JOURNALPLAYBACK;
+        ////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////// FUNCKJE ///////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////
 
-        public static IntPtr DesktopCreate(string name)
+        public static IntPtr Stworz(string nazwa)
         {
-            return CreateDesktop(name, IntPtr.Zero, IntPtr.Zero, 0, rights, IntPtr.Zero);
-
+            return CreateDesktop(nazwa, IntPtr.Zero, IntPtr.Zero, 0, prawa, IntPtr.Zero);
         }
 
-        public static IntPtr DesktopOpen(string name)
+        public static IntPtr Otworz(string nazwa)
         {
-            return OpenDesktop(name, 0, true, rights);
-
+            return OpenDesktop(nazwa, 0, true, prawa);
         }
 
-        public static IntPtr DesktopOpenInput()
+        public static bool Przelacz(string nazwa)
         {
-            return OpenInputDesktop(0, true, rights);
-
+            if (Otworz(nazwa) == IntPtr.Zero)
+            {
+                return false;
+            }
+            return SwitchDesktop(Otworz(nazwa));
         }
 
-        public static bool DesktopSwitch(string name)
+        public static bool CzyIstnieje(string nazwa)
         {
-            IntPtr handle = DesktopOpen(name);
-            if (handle == IntPtr.Zero) { return false; }
-            return SwitchDesktop(handle);
-
-        }
-
-        public static bool DesktopClose(string name)
-        {
-            IntPtr handle = DesktopOpen(name);
-            if (handle == IntPtr.Zero) { return false; }
-            return CloseDesktop(handle);
-
-        }
-
-        public static bool DesktopExists(string name)
-        {
-            IntPtr handle = DesktopOpen(name);
-            if (handle == IntPtr.Zero) { return false; }
+            if (Otworz(nazwa) == IntPtr.Zero)
+            {
+                return false;
+            }
             return true;
         }
 
-        public static string DesktopName(IntPtr handle)
+        public static string NazwaPulpitu(IntPtr handle)
         {
-            if (handle == IntPtr.Zero) { return string.Empty; }
+            if (handle == IntPtr.Zero)
+            {
+                return string.Empty;
+            }
 
-            int length = 0;
-            GetUserObjectInformation(handle, 2, IntPtr.Zero, 0, ref length);
+            int dlugosc = 0;
+            GetUserObjectInformation(handle, 2, IntPtr.Zero, 0, ref dlugosc);
+            IntPtr wskaznik = Marshal.AllocHGlobal(dlugosc);
+            bool wynik = GetUserObjectInformation(handle, 2, wskaznik, dlugosc, ref dlugosc);
+            string nazwa = Marshal.PtrToStringAnsi(wskaznik);
+            Marshal.FreeHGlobal(wskaznik);
 
-            IntPtr pointer = Marshal.AllocHGlobal(length);
-            bool result = GetUserObjectInformation(handle, 2, pointer, length, ref length);
-            string name = Marshal.PtrToStringAnsi(pointer);
-            Marshal.FreeHGlobal(pointer);
-
-            if (!result) { return string.Empty; }
-
-            return name;
+            if (!wynik)
+            {
+                return string.Empty;
+            }
+            return nazwa;
         }
 
         ////////////////////////////////
@@ -146,18 +130,21 @@ namespace Wirtualny_Pulpit
 
         private const int NORMAL_PRIORITY_CLASS = 0x00000020;
 
-        public static bool ProcessCreate(string name, string path, string args)
+        ////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////// FUNCKJE ///////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////
+
+        public static bool StworzProces(string nazwa, string sciezka, string args)
         {
             try
             {
-                PROCESS_INFORMATION processInformation = new PROCESS_INFORMATION();
+                PROCESS_INFORMATION informacje = new PROCESS_INFORMATION();
                 STARTUPINFO startupInfo = new STARTUPINFO();
                 startupInfo.cb = Marshal.SizeOf(startupInfo);
-                startupInfo.lpDesktop = name;
-
-                string path2 = string.Format("\"{0}\" {1}", path, args);
-                bool result = CreateProcess(path, path2, IntPtr.Zero, IntPtr.Zero, true,
-                        NORMAL_PRIORITY_CLASS, IntPtr.Zero, null, ref startupInfo, ref processInformation);
+                startupInfo.lpDesktop = nazwa;
+                string sciezka2 = string.Format("\"{0}\" {1}", sciezka, args);
+                bool result = CreateProcess(sciezka, sciezka2, IntPtr.Zero, IntPtr.Zero, true,
+                        NORMAL_PRIORITY_CLASS, IntPtr.Zero, null, ref startupInfo, ref informacje);
 
                 return result;
             }
@@ -167,7 +154,5 @@ namespace Wirtualny_Pulpit
                 return false;
             }
         }
-
-
     }
 }

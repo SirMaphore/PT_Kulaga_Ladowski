@@ -23,20 +23,6 @@ namespace Wirtualny_Pulpit
             InitializeComponent();
         }
 
-        private string currentDesktop = "";
-
-        private void DesktopInitialize(string name)
-        {
-            if (!Desktop.DesktopExists(name))
-            {
-                Desktop.DesktopCreate(name);
-
-                Desktop.ProcessCreate(name, Application.ExecutablePath, "start");
-            }
-
-            Desktop.DesktopSwitch(name);
-        }
-
         protected override void OnLoad(EventArgs e)
         {
             if (Program.Start == "start")
@@ -50,20 +36,35 @@ namespace Wirtualny_Pulpit
                 this.Opacity = 100;
             }
 
-            currentDesktop = Desktop.DesktopName(Desktop.DesktopOpenInput());
-
             base.OnLoad(e);
         }
-        
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DesktopInitialize("Default");
+            string nazwa = "Default";
+
+            if (!Desktop.CzyIstnieje(nazwa))
+            {
+                Desktop.Stworz(nazwa);
+
+                Desktop.StworzProces(nazwa, Application.ExecutablePath, "start");
+            }
+
+            Desktop.Przelacz(nazwa);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            DesktopInitialize("Desktop_New");
+            string nazwa = "Nowy_Pulpit_Drugi";
+            
+            if (!Desktop.CzyIstnieje(nazwa))
+            {
+                Desktop.Stworz(nazwa);
+
+                Desktop.StworzProces(nazwa, Application.ExecutablePath, "start");
+            }
+
+            Desktop.Przelacz(nazwa);
         }
     }
 }
